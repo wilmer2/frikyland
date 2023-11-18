@@ -1,14 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create Post{% endblock %}
+{% block title %}
+    {{ parent() }} to Posts
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    {{ form(form) }}
-</div>
+
+    {# body data #}
+    <div class="container">
+        {{ form(form) }}
+
+    </div>
+
+    <div class="container my-5 col-6">
+        <table class="table">
+            <thead>
+                <td>
+                    id
+                </td>
+                <td>
+                    titulo
+                </td>
+                <td>
+                    descripcion
+                </td>
+                <td>
+                    creation date
+                </td>
+                <td>
+                    image
+                </td>
+            </thead>
+            <tbody>
+            {% for post  in posts %}
+                <tr>
+                    <td>
+
+                        <a href="{{ path('post_detail', {id: post.id}) }}">
+                            Ver
+                        </a>
+                    </td>
+                    <td>
+                        {{ post.title }}
+                    </td>
+                    <td>
+                        {{ post.description }}
+                    </td>
+                    <td>
+                        {{ post.creation_date| date }}
+                    </td>
+                    <td>
+                        {% if post.file != null %}
+                            <img src="{{ asset('uploads/files/' ~ post.file) }}" height="200" width="200">
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation">
+            {{ knp_pagination_render(posts) }}
+        </div>
+    </div>
+
+
 {% endblock %}

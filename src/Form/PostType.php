@@ -6,6 +6,7 @@ use App\Entity\Post;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,14 +21,11 @@ class PostType extends AbstractType
                 'choices' => Post::TYPES
             ])
             ->add('description')
-            ->add('file')
-            ->add('creation_date', DateType::class, [
-                'widget' => 'choice',
+            ->add('file', FileType::class, [
+                'label' => 'Photo',
+                'required' => false
             ])
-            ->add('url')
             ->add('submit', SubmitType::class);
-//            ->add('user')
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
